@@ -7,10 +7,8 @@ RUN npm install
 
 COPY app/ .
 
-# Intentionally planted problem 3: Secret hardcoded
-ENV API_KEY=super-secret-key
-
-# Intentionally planted problem 2: Typo in variable name
-ENV LOGLEVEL=info
+# Do NOT bake secrets or runtime config into the image. Inject at runtime:
+# - non-secret config: use an env-file (`--env-file .env`) or `-e VAR=value`
+# - secrets: inject at runtime (do not commit), or use your platform's secret manager
 
 CMD [ "npm", "start" ]
